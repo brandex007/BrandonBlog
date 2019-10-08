@@ -79,6 +79,7 @@ public class LoginFragment extends Fragment {
         if(!email.equals("none")) {
             loginUser(email, password, false);
         }else {
+            loadingDialog.showDialog(false);
             view.setVisibility(View.VISIBLE);
             loginBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
