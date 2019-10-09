@@ -3,6 +3,9 @@ package com.example.brandonblog.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
@@ -108,4 +111,16 @@ public class Blog implements Parcelable {
         String date = simpleDateFormat.format(date_updated);
         return date;
     }
+
+    public static final DiffUtil.ItemCallback<Blog> BLOG_COMPARATOR = new DiffUtil.ItemCallback<Blog>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Blog oldItem, @NonNull Blog newItem) {
+            return oldItem.title.equals(newItem.title);
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Blog oldItem, @NonNull Blog newItem) {
+            return true;
+        }
+    };
 }

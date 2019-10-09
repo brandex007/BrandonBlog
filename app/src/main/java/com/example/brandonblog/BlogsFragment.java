@@ -28,6 +28,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -143,7 +144,7 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        final BlogsRecyclerViewAdapter adapter = new BlogsRecyclerViewAdapter(new ArrayList<Blog>(), getActivity());
+        final BlogsRecyclerViewAdapter adapter = new BlogsRecyclerViewAdapter(getActivity());
         adapter.setListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -158,16 +159,12 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
         });
 
         blogsViewModel = ViewModelProviders.of(this).get(BlogsViewModel.class);
-        blogsViewModel.getBlogs().observe(this, new Observer<BlogsResponse>() {
+        blogsViewModel.initPagedList(user.getToken());
+        blogsViewModel.getBlogs().observe(this, new Observer<PagedList<Blog>>() {
             @Override
-            public void onChanged(BlogsResponse blogsResponse) {
-                if(blogsResponse != null) {
-                    for(Blog blog : blogsResponse.getResults()) {
-                        blogList.add(new Blog(blog.getTitle(), blog.getBody(), blog.getDate_updated(), blog.getUsername(), blog.getImage_url()));
-                        Log.d(TAG, "onImageResponse: " + blog.getImage_url());
-                    }
-                    adapter.updateData(blogList);
-                }
+            public void onChanged(PagedList<Blog> blogs) {
+                Log.d(TAG, "onChanged: " + blogs.toString());
+                adapter.submitList(blogs);
             }
         });
     }
@@ -194,11 +191,11 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
     }
 
     @Override
-    public void onClick(int position) {
+    public void onClick(Blog blog) {
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         final Bundle bundle = new Bundle();
-        bundle.putParcelable("blog", blogList.get(position));
+        bundle.putParcelable("blog", blog);
         navController.navigate(R.id.action_blogsFragment_to_blogFragment, bundle);
     }
 }

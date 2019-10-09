@@ -1,8 +1,6 @@
 package com.example.brandonblog;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +19,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.brandonblog.Models.User;
-import com.example.brandonblog.Retrofit.RetrofitFactory;
+import com.example.brandonblog.Retrofit.RetrofitClientInstance;
 import com.example.brandonblog.Retrofit.RetrofitServices;
 import com.example.brandonblog.ViewModels.AccountViewModel;
-
-import java.util.List;
 
 import retrofit2.Retrofit;
 
@@ -63,7 +59,7 @@ public class LoginFragment extends Fragment {
         usernameText = view.findViewById(R.id.username);
         passwordText = view.findViewById(R.id.password);
 
-        retrofit = RetrofitFactory.getRetrofit();
+        retrofit = RetrofitClientInstance.getRetrofit();
         retrofitServices = retrofit.create(RetrofitServices.class);
 
         sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);

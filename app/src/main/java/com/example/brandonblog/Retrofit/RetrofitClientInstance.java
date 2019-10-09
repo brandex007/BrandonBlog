@@ -12,10 +12,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitFactory {
+public class RetrofitClientInstance {
     private static Retrofit retrofit;
 
-    private RetrofitFactory(){
+    private RetrofitClientInstance(){
 
     }
 
