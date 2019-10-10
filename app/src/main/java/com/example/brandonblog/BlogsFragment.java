@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.FileUtils;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ import com.example.brandonblog.Models.Blog;
 import com.example.brandonblog.Models.User;
 import com.example.brandonblog.RecyclerViews.BlogsRecyclerViewAdapter;
 import com.example.brandonblog.Retrofit.BlogsResponse;
+import com.example.brandonblog.Utils.RealPathUtil;
 import com.example.brandonblog.ViewModels.AccountViewModel;
 import com.example.brandonblog.ViewModels.BlogsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -50,6 +52,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Random;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -112,7 +115,8 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
                     public void onClick(View view) {
 
                         // Get the Image from data
-                        Uri selectedImage = chosenImageUri;
+
+                        /*
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                         Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -122,7 +126,9 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
                         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         mediaPath = cursor.getString(columnIndex);
 
-                        File file = new File(mediaPath);
+                        File file = new File(mediaPath);*/
+
+                        File file = new File(RealPathUtil.getRealPath(getContext(), chosenImageUri));
 
                         blogsViewModel.addBlog(title.getText().toString(), content.getText().toString(), file);
                         dialog.hide();
