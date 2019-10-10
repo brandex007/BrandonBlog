@@ -1,16 +1,10 @@
 package com.example.brandonblog;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -38,30 +29,20 @@ import com.bumptech.glide.Glide;
 import com.example.brandonblog.Models.Blog;
 import com.example.brandonblog.Models.User;
 import com.example.brandonblog.RecyclerViews.BlogsRecyclerViewAdapter;
-import com.example.brandonblog.Retrofit.BlogsResponse;
-import com.example.brandonblog.Utils.RealPathUtil;
 import com.example.brandonblog.ViewModels.AccountViewModel;
 import com.example.brandonblog.ViewModels.BlogsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.hbisoft.pickit.PickiT;
+import com.hbisoft.pickit.PickiTCallbacks;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Random;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
-public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.Listener {
+public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.Listener, PickiTCallbacks {
     private static final int OPEN_DOCUMENT_CODE = 2;
     private User user;
     private TextView blogText;
@@ -73,6 +54,8 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
     private Uri chosenImageUri;
     private String mediaPath;
     private NavController navController;
+    private PickiT pickiT;
+    private File file;
 
     @Nullable
     @Override
@@ -84,6 +67,7 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        pickiT = new PickiT(getContext(), this);
         fab = view.findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -127,8 +111,6 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
                         mediaPath = cursor.getString(columnIndex);
 
                         File file = new File(mediaPath);*/
-
-                        File file = new File(RealPathUtil.getRealPath(getContext(), chosenImageUri));
 
                         blogsViewModel.addBlog(title.getText().toString(), content.getText().toString(), file);
                         dialog.hide();
@@ -185,13 +167,7 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
         if (requestCode == OPEN_DOCUMENT_CODE && resultCode == RESULT_OK) {
             if (data != null) {
                 // this is the image selected by the user
-                chosenImageUri = data.getData();
-
-                Log.d(TAG, "onClick1: " + chosenImageUri.getPath());
-
-                view1.findViewById(R.id.add_btn).setVisibility(View.INVISIBLE);
-                ImageView imageView = view1.findViewById(R.id.image_view);
-                Glide.with(getContext()).load(chosenImageUri).into(imageView);
+                pickiT.getPath(data.getData(), Build.VERSION.SDK_INT);
             }
         }
     }
@@ -203,5 +179,24 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
         final Bundle bundle = new Bundle();
         bundle.putParcelable("blog", blog);
         navController.navigate(R.id.action_blogsFragment_to_blogFragment, bundle);
+    }
+
+    @Override
+    public void PickiTonStartListener() {
+
+    }
+
+    @Override
+    public void PickiTonProgressUpdate(int progress) {
+
+    }
+
+    @Override
+    public void PickiTonCompleteListener(String path, boolean wasDriveFile, boolean wasUnknownProvider, boolean wasSuccessful, String Reason) {
+        file = new File(path);
+
+        view1.findViewById(R.id.add_btn).setVisibility(View.INVISIBLE);
+        ImageView imageView = view1.findViewById(R.id.image_view);
+        Glide.with(getContext()).load(file.getPath()).into(imageView);
     }
 }
