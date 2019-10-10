@@ -4,54 +4,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/add_blog_post">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:textSize="20sp"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textColor="#FFF"
-        android:text="Add new blogpost"
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:scaleType="center"
-        android:background="#4CAF50"
-        android:contentDescription="@string/app_name" />
-    <EditText
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"
-        android:hint="title" />
-    <EditText
-        android:id="@+id/body"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="sans-serif"
-        android:hint="body"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-        <Button
-            android:id="@+id/add_btn"
-            android:text="[ Add image ]"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:text="Add new blogpost"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        <ImageView
-            android:id="@+id/image_view"
+            android:layout_height="64dp"
+            android:scaleType="center"
+            android:background="#4CAF50"
+            android:contentDescription="@string/app_name" />
+
+        <EditText
+            android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
-    </RelativeLayout>
-</LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:hint="title" />
+
+        <EditText
+            android:id="@+id/body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif"
+            android:hint="body" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <Button
+                android:id="@+id/add_btn"
+                android:text="[ Add image ]"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
     <Button
         android:id="@+id/submit_blog_btn"
         android:text="Add"

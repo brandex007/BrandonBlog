@@ -9,7 +9,7 @@ public class BlogsDataSourceFactory extends DataSource.Factory<Long, Blog> {
     public MutableLiveData<BlogsDataSource> mutableLiveData = new MutableLiveData<>();
     private String token;
 
-    public BlogsDataSourceFactory(String token){
+    public BlogsDataSourceFactory(String token) {
         this.token = token;
     }
 

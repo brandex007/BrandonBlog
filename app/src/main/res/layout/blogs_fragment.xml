@@ -11,8 +11,7 @@
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        />
+        android:scrollbars="vertical" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -24,5 +23,5 @@
         android:layout_alignParentBottom="true"
         android:contentDescription="submit"
         android:src="@drawable/ic_add_black_24dp"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp" />
 </RelativeLayout>

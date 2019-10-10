@@ -7,10 +7,12 @@
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".LoginFragment">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <EditText
             android:backgroundTint="#FFF"
             android:textColorHint="#FFF"
@@ -19,7 +21,8 @@
             android:id="@+id/username"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp" />
+
         <EditText
             android:backgroundTint="#FFF"
             android:textColorHint="#FFF"
@@ -28,11 +31,12 @@
             android:id="@+id/password"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp" />
+
         <Button
             android:id="@+id/login_btn"
             android:text="Login"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

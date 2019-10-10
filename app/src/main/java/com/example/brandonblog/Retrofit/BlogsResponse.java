@@ -1,7 +1,6 @@
 package com.example.brandonblog.Retrofit;
 
 import com.example.brandonblog.Models.Blog;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

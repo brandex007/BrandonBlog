@@ -3,7 +3,6 @@ package com.example.brandonblog.Repository;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
 import com.example.brandonblog.Models.Blog;
@@ -13,8 +12,6 @@ import com.example.brandonblog.Retrofit.RetrofitServices;
 
 import java.util.List;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +24,7 @@ public class BlogsDataSource extends PageKeyedDataSource<Long, Blog> {
     private String token;
     private Retrofit retrofit;
 
-    public BlogsDataSource(String token){
+    public BlogsDataSource(String token) {
         this.token = token;
     }
 
@@ -41,10 +38,10 @@ public class BlogsDataSource extends PageKeyedDataSource<Long, Blog> {
         call.enqueue(new Callback<BlogsResponse>() {
             @Override
             public void onResponse(Call<BlogsResponse> call, Response<BlogsResponse> response) {
-                if(response.body() != null) {
+                if (response.body() != null) {
                     Log.d(TAG, "onResponse1: " + response.body().getResults().get(0).getTitle());
                     List<Blog> blogs = response.body().getResults();
-                    callback.onResult(blogs,null, (long)2);
+                    callback.onResult(blogs, null, (long) 2);
                 }
             }
 
@@ -61,18 +58,18 @@ public class BlogsDataSource extends PageKeyedDataSource<Long, Blog> {
         call.enqueue(new Callback<BlogsResponse>() {
             @Override
             public void onResponse(Call<BlogsResponse> call, Response<BlogsResponse> response) {
-                if(response.body() != null) {
+                if (response.body() != null) {
                     Log.d(TAG, "onResponse: " + response.body().getResults().toString());
                     List<Blog> blogs = response.body().getResults();
 
                     long key;
-                    if(params.key > 1){
+                    if (params.key > 1) {
                         key = params.key - 1;
-                    }else{
+                    } else {
                         key = 0;
                     }
 
-                    callback.onResult(blogs,key);
+                    callback.onResult(blogs, key);
                 }
             }
 
@@ -89,10 +86,10 @@ public class BlogsDataSource extends PageKeyedDataSource<Long, Blog> {
         call.enqueue(new Callback<BlogsResponse>() {
             @Override
             public void onResponse(Call<BlogsResponse> call, Response<BlogsResponse> response) {
-                if(response.body() != null) {
+                if (response.body() != null) {
                     Log.d(TAG, "onResponse: " + response.body().getResults().toString());
                     List<Blog> blogs = response.body().getResults();
-                    callback.onResult(blogs,params.key + 1);
+                    callback.onResult(blogs, params.key + 1);
                 }
             }
 

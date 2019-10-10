@@ -1,30 +1,22 @@
 package com.example.brandonblog.ViewModels;
 
 import android.app.Application;
-import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.example.brandonblog.Models.Blog;
-import com.example.brandonblog.Models.User;
 import com.example.brandonblog.Repository.BlogsDataSource;
 import com.example.brandonblog.Repository.BlogsDataSourceFactory;
 import com.example.brandonblog.Repository.Repository;
-import com.example.brandonblog.Retrofit.BlogsResponse;
 
 import java.io.File;
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 public class BlogsViewModel extends AndroidViewModel {
     private Repository repository;
@@ -42,7 +34,7 @@ public class BlogsViewModel extends AndroidViewModel {
 
     }
 
-    public void initPagedList(String token){
+    public void initPagedList(String token) {
         BlogsDataSourceFactory blogsDataSourceFactory = new BlogsDataSourceFactory(token);
         blogsDataSourceLiveData = blogsDataSourceFactory.mutableLiveData;
         PagedList.Config config = (new PagedList.Config.Builder())
@@ -62,13 +54,16 @@ public class BlogsViewModel extends AndroidViewModel {
     }*/
 
 
-    public void addBlog(String title, String body, File image){
+    public void addBlog(String title, String body, File image) {
         repository.addBlog(title, body, image);
     }
 
 
+    public MediatorLiveData<String> editBlog(String title, String body, File image, String slug) {
+        return repository.editBlog(title, body, image, slug);
+    }
 
-    public LiveData<PagedList<Blog>> getBlogs(){
+    public LiveData<PagedList<Blog>> getBlogs() {
         return blogs;
     }
 }

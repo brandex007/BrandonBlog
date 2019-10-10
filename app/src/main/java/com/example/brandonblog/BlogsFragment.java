@@ -157,7 +157,7 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
         });
     }
 
-    public void showSnackBar(){
+    public void showSnackBar() {
         Snackbar.make(getView(), "Blog post added", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
@@ -178,6 +178,7 @@ public class BlogsFragment extends Fragment implements BlogsRecyclerViewAdapter.
 
         final Bundle bundle = new Bundle();
         bundle.putParcelable("blog", blog);
+        bundle.putParcelable("user", user);
         navController.navigate(R.id.action_blogsFragment_to_blogFragment, bundle);
     }
 

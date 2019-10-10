@@ -8,28 +8,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.brandonblog.Models.Blog;
 import com.example.brandonblog.R;
 
-import java.util.ArrayList;
 
-
-public class BlogsRecyclerViewAdapter extends PagedListAdapter<Blog,BlogsRecyclerViewAdapter.MyViewHolder> {
+public class BlogsRecyclerViewAdapter extends PagedListAdapter<Blog, BlogsRecyclerViewAdapter.MyViewHolder> {
     private static Listener listener;
     private static Context context;
 
-    public interface Listener{
+    public interface Listener {
         void onClick(Blog blog);
     }
 
-    public void setListener(Listener listener){
+    public void setListener(Listener listener) {
         this.listener = listener;
     }
 
@@ -48,24 +46,24 @@ public class BlogsRecyclerViewAdapter extends PagedListAdapter<Blog,BlogsRecycle
             this.cardView = itemView.findViewById(R.id.card_view);
         }
 
-        void bind(final Blog blog){
+        void bind(final Blog blog) {
             textViewName.setText(blog.getTitle());
             textViewBody.append(blog.getUsername());
 
             String body = blog.getBody();
 
-            if(body.length() > 20) {
+            if (body.length() > 20) {
                 body = body.substring(0, 20);
             }
 
             textViewBody.append("\n\n" + body + "...");
 
 
-            Glide.with(context).load(blog.getImage_url()).into(imageViewIcon);
+            Glide.with(context).load(blog.getImage_url()).signature(new ObjectKey(blog)).into(imageViewIcon);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(listener != null){
+                    if (listener != null) {
                         listener.onClick(blog);
                     }
                 }
@@ -96,12 +94,12 @@ public class BlogsRecyclerViewAdapter extends PagedListAdapter<Blog,BlogsRecycle
     private static final DiffUtil.ItemCallback<Blog> BLOG_COMPARATOR = new DiffUtil.ItemCallback<Blog>() {
         @Override
         public boolean areItemsTheSame(@NonNull Blog oldItem, @NonNull Blog newItem) {
-            return false;
+            return oldItem.getPrimaryKey() == newItem.getPrimaryKey();
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull Blog oldItem, @NonNull Blog newItem) {
-            return false;
+            return oldItem.toString().equals(newItem.toString());
         }
     };
 

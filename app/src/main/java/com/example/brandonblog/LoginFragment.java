@@ -72,9 +72,9 @@ public class LoginFragment extends Fragment {
         loadingDialog = (LoadingDialog) getActivity();
         loadingDialog.showDialog(true);
 
-        if(!email.equals("none")) {
+        if (!email.equals("none")) {
             loginUser(email, password, false);
-        }else {
+        } else {
             loadingDialog.showDialog(false);
             view.setVisibility(View.VISIBLE);
             loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,7 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    public void loginUser(String email, String password, final boolean newUser){
+    public void loginUser(String email, String password, final boolean newUser) {
         accountViewModel.loginUser(email, password);
         accountViewModel.getUser().observe(this, new Observer<User>() {
             @Override
@@ -95,7 +95,7 @@ public class LoginFragment extends Fragment {
 
                 loadingDialog.showDialog(false);
 
-                if(newUser) {
+                if (newUser) {
                     editor = sharedPreferences.edit();
                     editor.putString("email", user.getEmail());
                     editor.putString("password", passwordText.getText().toString());

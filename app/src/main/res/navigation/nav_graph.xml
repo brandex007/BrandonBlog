@@ -8,7 +8,7 @@
         android:id="@+id/loginFragment"
         android:name="com.example.brandonblog.LoginFragment"
         android:label="login_fragment"
-        tools:layout="@layout/login_fragment" >
+        tools:layout="@layout/login_fragment">
         <action
             android:id="@+id/action_loginFragment_to_blogsFragment"
             app:destination="@id/blogsFragment" />
@@ -17,7 +17,7 @@
         android:id="@+id/blogsFragment"
         android:name="com.example.brandonblog.BlogsFragment"
         android:label="blogs_fragment"
-        tools:layout="@layout/blogs_fragment" >
+        tools:layout="@layout/blogs_fragment">
         <action
             android:id="@+id/action_blogsFragment_to_blogFragment"
             app:destination="@id/blogFragment"

@@ -3,15 +3,18 @@ package com.example.brandonblog.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Blog implements Parcelable {
+    @SerializedName("pk")
+    private int primaryKey;
+
+    @SerializedName("slug")
+    private String slug;
+
     @SerializedName("title")
     private String title;
     @SerializedName("body")
@@ -23,16 +26,9 @@ public class Blog implements Parcelable {
     @SerializedName("image")
     private String image_url;
 
-    public Blog(String title, String body, Date date_updated, String username, String image_url) {
-        this.title = title;
-        this.body = body;
-        this.date_updated = date_updated;
-        this.username = username;
-        this.image_url = image_url;
-    }
-
-
     protected Blog(Parcel in) {
+        primaryKey = in.readInt();
+        slug = in.readString();
         title = in.readString();
         body = in.readString();
         username = in.readString();
@@ -51,6 +47,48 @@ public class Blog implements Parcelable {
         }
     };
 
+    @Override
+    public String toString() {
+        return "Blog{" +
+                "primaryKey=" + primaryKey +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", date_updated=" + date_updated +
+                ", username='" + username + '\'' +
+                ", image_url='" + image_url + '\'' +
+                '}';
+    }
+
+    public Blog() {
+
+    }
+
+    public Blog(int primaryKey, String slug, String title, String body, Date date_updated, String username, String image_url) {
+        this.primaryKey = primaryKey;
+        this.slug = slug;
+        this.title = title;
+        this.body = body;
+        this.date_updated = date_updated;
+        this.username = username;
+        this.image_url = image_url;
+    }
+
+    public int getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(int primaryKey) {
+        this.primaryKey = primaryKey;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -67,6 +105,13 @@ public class Blog implements Parcelable {
         this.body = body;
     }
 
+    public Date getDate_updated() {
+        return date_updated;
+    }
+
+    public void setDate_updated(Date date_updated) {
+        this.date_updated = date_updated;
+    }
 
     public String getUsername() {
         return username;
@@ -84,43 +129,26 @@ public class Blog implements Parcelable {
         this.image_url = image_url;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(title);
-        parcel.writeString(body);
-        parcel.writeString(username);
-        parcel.writeString(image_url);
-    }
-
-    public Date getDate_updated() {
-        return date_updated;
-    }
-
-    public void setDate_updated(Date date_updated) {
-        this.date_updated = date_updated;
-    }
-
-    public String getDateUpdatedFormattedMonthDayYear(){
+    public String getDateUpdatedFormattedMonthDayYear() {
         String pattern = "yyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(date_updated);
         return date;
     }
 
-    public static final DiffUtil.ItemCallback<Blog> BLOG_COMPARATOR = new DiffUtil.ItemCallback<Blog>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull Blog oldItem, @NonNull Blog newItem) {
-            return oldItem.title.equals(newItem.title);
-        }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-        @Override
-        public boolean areContentsTheSame(@NonNull Blog oldItem, @NonNull Blog newItem) {
-            return true;
-        }
-    };
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(primaryKey);
+        dest.writeString(slug);
+        dest.writeString(title);
+        dest.writeString(body);
+        dest.writeString(username);
+        dest.writeString(image_url);
+    }
+
 }

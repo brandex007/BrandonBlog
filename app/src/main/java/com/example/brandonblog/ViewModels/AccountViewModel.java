@@ -8,15 +8,16 @@ import com.example.brandonblog.Repository.Repository;
 
 public class AccountViewModel extends ViewModel {
     Repository repository;
-    public AccountViewModel(){
+
+    public AccountViewModel() {
         repository = Repository.getInstance();
     }
 
-    public LiveData<User> getUser(){
+    public LiveData<User> getUser() {
         return repository.getUser();
     }
 
-    public void loginUser(String username, String password){
-        repository.loginUser(username,password);
+    public void loginUser(String username, String password) {
+        repository.loginUser(username, password);
     }
 }
